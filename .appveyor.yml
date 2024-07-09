@@ -1,0 +1,22 @@
+image: Visual Studio 2019
+
+environment:
+  matrix:
+    - php: C:\php\php-7.4.0-Win32-vc15-x64
+    - php: C:\php\php-8.0.0-Win32-vc15-x64
+
+install:
+  - ps: Install-Product node 12
+  - set PATH=%php%;%PATH%
+  - php -v
+  - php -m
+  - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  - php composer-setup.php
+  - php -r "unlink('composer-setup.php');"
+  - php composer.phar install
+
+build_script:
+  - php vendor/bin/phpunit
+
+test_script:
+  - php vendor/bin/phpunit
